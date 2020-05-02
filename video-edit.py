@@ -55,9 +55,13 @@ def importVideos(
         return video
 
     video_path = [video_dir + s for s in os.listdir(video_dir) if s.endswith("mp4")]
-
-    if order == "date":
-        video_path.sort(key=lambda s: os.path.getmtime(os.path.join(s)))
+    print(order)
+    if order == "name":
+        print(video_path)
+        video_path.sort()
+        print(video_path)
+    else:  # default order by date
+        video_path.sort(key=os.path.getmtime)
 
     return list(map(importClip, video_path))
 
@@ -110,7 +114,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(
             argv,
-            "hl:v:m:d:c:b:g:o",
+            "hl:v:m:d:c:b:g:o:",
             [
                 "links-file=",
                 "videos-dir=",
